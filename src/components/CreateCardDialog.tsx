@@ -11,6 +11,8 @@ import { Button } from "./ui/Button/Button";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/Form/Form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/Select/Select";
+import { Eye, EyeOff } from "lucide-react"; 
+import { useState } from "react";
 
 const cardFormSchema = z.object({
   cardNumber: z.string().min(4, "Card number is required"),
@@ -26,6 +28,7 @@ type AddCardDialogProps = {
 };
 
 export function AddCardDialog({ onCreate }: AddCardDialogProps) {
+    const [showCvc, setShowCvc] = useState(false);
   const form = useForm<CardFormInputs>({
     resolver: zodResolver(cardFormSchema),
     defaultValues: {
@@ -111,8 +114,17 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>CVC</FormLabel>
-                  <FormControl>
-                    <Input placeholder="•••" type="password" {...field} />
+                  <FormControl className="relative">
+                    <Input placeholder="•••" type={showCvc ? "text" : "password"} {...field} />
+                    <button
+                      type="button"
+                      onClick={() => setShowCvc((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900"
+                      tabIndex={-1}
+                      aria-label={showCvc ? "Hide CVC" : "Show CVC"}
+                    >
+                        {showCvc ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
