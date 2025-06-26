@@ -10,16 +10,15 @@ export function useCards() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        setTimeout(() => {
-            const typedCards: Card[] = mockCards.map((card) => ({
-                ...card,
-                brand: card.brand as Card["brand"],
-            }));
-            setCards(typedCards);
-            setFiltered(typedCards);
-            setIsLoading(false);
-        }, 1000);
+        const typedCards: Card[] = mockCards.map((card) => ({
+            ...card,
+            brand: card.brand as Card["brand"],
+        }));
+        setCards(typedCards);
+        setFiltered(typedCards);
+        setIsLoading(false);
     }, []);
+
 
     const handleFilter = (value: string) => {
         setFilter(value);
