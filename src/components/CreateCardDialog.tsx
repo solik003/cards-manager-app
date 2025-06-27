@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { getCardBrand } from "./utils/card";
+import { ControllerRenderProps } from "react-hook-form";
 
 const cardFormSchema = z.object({
     cardNumber: z
@@ -68,7 +69,7 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
                         <FormField
                             control={form.control}
                             name="cardNumber"
-                            render={({ field }) => (
+                            render={({ field }: { field: ControllerRenderProps<CardFormInputs, "cardNumber"> }) => (
                                 <FormItem>
                                     <FormLabel>Card Number</FormLabel>
                                     <FormControl>
@@ -82,7 +83,7 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
                         <FormField
                             control={form.control}
                             name="expiry"
-                            render={({ field }) => (
+                            render={({ field }: { field: ControllerRenderProps<CardFormInputs, "expiry"> })=> (
                                 <FormItem>
                                     <FormLabel>Expiration Date</FormLabel>
                                     <FormControl>
@@ -96,7 +97,7 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
                         <FormField
                             control={form.control}
                             name="cvc"
-                            render={({ field }) => (
+                            render={({ field }: { field: ControllerRenderProps<CardFormInputs, "cvc"> }) => (
                                 <FormItem>
                                     <FormLabel>CVC</FormLabel>
                                     <FormControl className="relative">
