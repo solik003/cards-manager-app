@@ -44,6 +44,16 @@ export function useCards() {
         setCards((prev) => [...prev, newCard]);
     };
 
+    const handleSetDefault = (id: string) => {
+        setCards((prev) =>
+            prev.map((card) => ({
+                ...card,
+                isDefault: card.id === id,
+            }))
+        );
+    };
+
+
     return {
         cards,
         filtered,
@@ -52,6 +62,7 @@ export function useCards() {
         handleFilter,
         handleDelete,
         handleCreate,
+        handleSetDefault,
     };
 }
 

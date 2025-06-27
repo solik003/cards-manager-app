@@ -19,15 +19,16 @@ import { getCardColumns } from "../columns/card-columns"
 
 type Props = {
     cards: Card[]
-    onDelete: (id: string) => void
+    onDelete: (id: string) => void,
+    onSetDefault: (id: string) => void
 }
 
-export const DataTable = ({ cards, onDelete }: Props) => {
+export const DataTable = ({ cards, onDelete, onSetDefault }: Props) => {
     const [sorting, setSorting] = React.useState<SortingState>([])
 
     const table = useReactTable({
         data: cards,
-        columns: getCardColumns(onDelete),
+        columns: getCardColumns(onDelete, onSetDefault),
         state: { sorting },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),

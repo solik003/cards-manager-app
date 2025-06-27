@@ -1,8 +1,9 @@
 
 import { Input } from "../components/ui/Input";
 import { AddCardDialog } from "../components/CreateCardDialog";
-import { DataTable } from "../components/DataTable";
+
 import { useCards } from "../hooks/useCards";
+import { DataTable } from "../components/DataTable";
 
 export default function MyCardsPage() {
     const {
@@ -12,7 +13,10 @@ export default function MyCardsPage() {
         handleFilter,
         handleDelete,
         handleCreate,
+        handleSetDefault,
     } = useCards();
+
+
 
     return (
         <div className="p-4 space-y-4">
@@ -33,7 +37,7 @@ export default function MyCardsPage() {
             ) : filtered.length === 0 ? (
                 <p>No cards found</p>
             ) : (
-                <DataTable cards={filtered} onDelete={handleDelete} />
+                <DataTable cards={filtered} onDelete={handleDelete} onSetDefault={handleSetDefault} />
             )}
         </div>
     );
