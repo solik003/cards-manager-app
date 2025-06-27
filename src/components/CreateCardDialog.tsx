@@ -55,7 +55,7 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
             <DialogTrigger asChild>
                 <Button onClick={() => setOpen(true)}>Create New</Button>
             </DialogTrigger>
-            <DialogContent className="p-6 rounded-lg w-[400px]">
+            <DialogContent className="p-6 rounded-lg w-[80%]">
                 <DialogTitle className="text-lg font-semibold mb-4">Add New Card</DialogTitle>
 
                 <Form {...form}>
