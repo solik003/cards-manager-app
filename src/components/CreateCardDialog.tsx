@@ -10,17 +10,20 @@ import { Input } from "./ui/Input";
 import { Button } from "./ui/Button/Button";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/Form/Form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/Select/Select";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { getCardBrand } from "./utils/card";
 
 const cardFormSchema = z.object({
-    cardNumber: z.string().min(4, "Card number is required"),
+    cardNumber: z
+        .string()
+        .min(4, "Card number is required")
+        .refine((val) => getCardBrand(val) !== "unknown", {
+            message: "Unsupported card brand",
+        }),
     expiry: z.string().min(1, "Expiration date is required"),
     cvc: z.string().min(1, "CVC is required"),
-    brand: z.enum(["visa", "mastercard", "amex"]),
 });
-
 type CardFormInputs = z.infer<typeof cardFormSchema>;
 
 type AddCardDialogProps = {
@@ -36,19 +39,21 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
         defaultValues: {
             cardNumber: "",
             expiry: "",
-            cvc: "",
-            brand: "visa",
+            cvc: ""
         },
     });
 
     const onSubmit = (data: CardFormInputs) => {
         const last4 = data.cardNumber.trim().slice(-4);
-        if (last4.length === 4) {
-            onCreate(data.brand, last4);
+        const brand = getCardBrand(data.cardNumber);
+
+        if (last4.length === 4 && brand !== "unknown") {
+            onCreate(brand, last4);
             form.reset();
             setOpen(false);
         }
     };
+
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -60,29 +65,6 @@ export function AddCardDialog({ onCreate }: AddCardDialogProps) {
 
                 <Form {...form}>
                     <div className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="brand"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Card Brand</FormLabel>
-                                    <FormControl>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a brand" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="visa">Visa</SelectItem>
-                                                <SelectItem value="mastercard">Mastercard</SelectItem>
-                                                <SelectItem value="amex">Amex</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
                         <FormField
                             control={form.control}
                             name="cardNumber"
