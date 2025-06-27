@@ -1,6 +1,6 @@
  # Card Manager App
 
-This is a simple React app to manage credit/debit cards. You can:
+This is a simple React + Vite + TypeScript app to manage credit/debit cards. You can:
 
 - Add new cards
 - Filter by brand or last 4 digits
@@ -9,7 +9,7 @@ This is a simple React app to manage credit/debit cards. You can:
 
 The project uses:
 
-- **React + TypeScript**
+- **React + TypeScript + Vite**
 - **Tailwind CSS**
 - **shadcn/ui**
 - **Zod + react-hook-form**
